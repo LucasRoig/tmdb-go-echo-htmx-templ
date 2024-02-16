@@ -1,0 +1,45 @@
+package button
+
+type buttonProps struct {
+	Text string
+	Get string
+	Post string
+	Class string
+}
+
+type buttonBuilder struct {
+	props buttonProps
+}
+
+func NewButtonBuilder() *buttonBuilder {
+	return &buttonBuilder{}
+}
+
+func (b *buttonBuilder) Text(text string) *buttonBuilder {
+	b.props.Text = text
+	return b
+}
+
+func (b *buttonBuilder) Get(get string, action string) *buttonBuilder {
+	b.props.Get = get
+	return b
+}
+
+func (b *buttonBuilder) Class(class string) *buttonBuilder {
+	b.props.Class = class
+	return b
+}
+
+func (b *buttonBuilder) Render() templ.Component {
+	return button(b.props)
+}
+
+templ button(p buttonProps) {
+	<button type="button" 
+	class={p.Class}
+	hx-get={ p.Get } 
+	hx-swap="outerHTML">
+	{ p.Text }
+    { children... }
+	</button>
+}

@@ -1,0 +1,64 @@
+package views
+
+import button "go-echo-htmx-templ/views/components"
+
+func getOne() string {
+	return "One"
+}
+
+templ hello(name string) {
+	<div class="px-[40px]">Hello, { name } { getOne() }</div>
+	if name == "World" {
+		@button.NewButtonBuilder().Text("Test 3").Get("/bt1", "outerHTML").Class("bg-green-500 text-white").Render()
+	}
+
+	@Button1()
+	@Button2()
+}
+
+
+templ Button1() {
+	@button.NewButtonBuilder().Text("Test 1").Get("/bt2", "outerHTML").Class("bg-blue-500 text-white").Render()
+	// @button(buttonProps{
+	// 	Text: "Test 1",
+	// 	Get: "/bt2",
+	// 	Class: "bg-blue-500 text-white",
+	// })
+}
+
+templ Button2() {
+		@button.NewButtonBuilder().Text("Test 2").Get("/bt1", "outerHTML").Class("bg-red-500 text-white").Render() {
+			TTTT
+		}
+
+	// @button(buttonProps{
+	// 	Text: "Test 2",
+	// 	Get: "/bt1",
+	// 	Class: "bg-red-500 text-white",
+	// })
+}
+
+
+templ HelloIndex(name string) {
+	@layout(hello(name))
+}
+
+templ layout(content templ.Component) {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+			<title>My Website</title>
+			<link rel="stylesheet" href="/static/main.css"/>
+			<link rel="stylesheet" href="/static/css/tailwind.css"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+		</head>
+		<body>
+			<main>
+				@content
+			</main>
+		</body>
+	</html>
+}
